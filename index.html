@@ -1,0 +1,40 @@
+
+# Program Menghitung Total Belanja
+
+total_belanja = 0
+daftar_barang = []
+
+while True:
+    print("\n=== INPUT BARANG ===")
+
+    nama = input("Masukkan nama barang: ")
+    harga = int(input("Masukkan harga barang: Rp "))
+    jumlah = int(input("Masukkan jumlah barang: "))
+
+    subtotal = harga * jumlah
+    total_belanja += subtotal
+
+    daftar_barang.append({
+        "nama": nama,
+        "harga": harga,
+        "jumlah": jumlah,
+        "subtotal": subtotal
+    })
+
+    lanjut = input("Tambah barang lagi? (y/n): ").lower()
+
+    if lanjut == "n":
+        break
+
+# Menampilkan hasil belanja
+print("\n=== STRUK BELANJA ===")
+
+for barang in daftar_barang:
+    print("Nama barang:", barang["nama"])
+    print("Harga: Rp", barang["harga"])
+    print("Jumlah:", barang["jumlah"])
+    print("Subtotal: Rp", barang["subtotal"])
+    print("----------------------")
+
+print("Total Belanja: Rp", total_belanja)
+print("Terima kasih sudah berbelanja!")
