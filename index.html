@@ -1,40 +1,153 @@
 
-# Program Menghitung Total Belanja
 
-total_belanja = 0
-daftar_barang = []
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Total Belanja</title>
 
-while True:
-    print("\n=== INPUT BARANG ===")
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eaf2f8;
+            padding: 20px;
+        }
 
-    nama = input("Masukkan nama barang: ")
-    harga = int(input("Masukkan harga barang: Rp "))
-    jumlah = int(input("Masukkan jumlah barang: "))
+        .container {
+            max-width: 450px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #aaa;
+        }
 
-    subtotal = harga * jumlah
-    total_belanja += subtotal
+        h2 {
+            text-align: center;
+            color: #24527a;
+        }
 
-    daftar_barang.append({
-        "nama": nama,
-        "harga": harga,
-        "jumlah": jumlah,
-        "subtotal": subtotal
-    })
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 7px 0;
+            box-sizing: border-box;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
 
-    lanjut = input("Tambah barang lagi? (y/n): ").lower()
+        button {
+            width: 100%;
+            padding: 11px;
+            margin-top: 10px;
+            background: #24527a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    if lanjut == "n":
-        break
+        button:hover {
+            background: #183b59;
+        }
 
-# Menampilkan hasil belanja
-print("\n=== STRUK BELANJA ===")
+        .hasil {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eaf7ea;
+            border-radius: 8px;
+        }
 
-for barang in daftar_barang:
-    print("Nama barang:", barang["nama"])
-    print("Harga: Rp", barang["harga"])
-    print("Jumlah:", barang["jumlah"])
-    print("Subtotal: Rp", barang["subtotal"])
-    print("----------------------")
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
 
-print("Total Belanja: Rp", total_belanja)
-print("Terima kasih sudah berbelanja!")
+<body>
+
+<div class="container">
+
+    <h2>PROGRAM TOTAL BELANJA</h2>
+
+    <label>Nama Barang:</label>
+    <input type="text" id="nama" placeholder="Masukkan nama barang">
+
+    <label>Harga Barang (Rp):</label>
+    <input type="number" id="harga" placeholder="Masukkan harga">
+
+    <label>Jumlah Barang:</label>
+    <input type="number" id="jumlah" placeholder="Masukkan jumlah">
+
+    <button onclick="tambahBarang()">Tambah Barang</button>
+
+    <div class="hasil">
+        <h3>Daftar Belanja:</h3>
+        <div id="daftar"></div>
+
+        <hr>
+
+        <p class="total">
+            Total Belanja: <span id="total">Rp0</span>
+        </p>
+    </div>
+
+    <button onclick="resetBelanja()">Hapus Semua</button>
+
+</div>
+
+<script>
+    let totalBelanja = 0;
+
+    function tambahBarang() {
+
+        // Input data barang
+        let nama = document.getElementById("nama").value;
+        let harga = Number(document.getElementById("harga").value);
+        let jumlah = Number(document.getElementById("jumlah").value);
+
+        // Validasi input
+        if (nama === "" || harga <= 0 || jumlah <= 0) {
+            alert("Masukkan data barang dengan benar!");
+            return;
+        }
+
+        // Menghitung subtotal
+        let subtotal = harga * jumlah;
+
+        // Menambahkan subtotal ke total belanja
+        totalBelanja += subtotal;
+
+        // Menampilkan daftar barang
+        let daftar = document.getElementById("daftar");
+
+        daftar.innerHTML += `
+            <p>
+                ${nama} (${jumlah} x ${harga.toLocaleString("id-ID")})
+                = Rp${subtotal.toLocaleString("id-ID")}
+            </p>
+        `;
+
+        // Menampilkan total belanja
+        document.getElementById("total").innerText =
+            "Rp" + totalBelanja.toLocaleString("id-ID");
+
+        // Mengosongkan input
+        document.getElementById("nama").value = "";
+        document.getElementById("harga").value = "";
+        document.getElementById("jumlah").value = "";
+    }
+
+    // Menghapus semua data belanja
+    function resetBelanja() {
+        totalBelanja = 0;
+        document.getElementById("daftar").innerHTML = "";
+        document.getElementById("total").innerText = "Rp0";
+    }
+</script>
+
+</body>
+</html>
