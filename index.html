@@ -1,68 +1,245 @@
 
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Program Total Belanja</title>
+    <title>Program Kasir - Total Belanja</title>
 
     <style>
-        body {
+        /* RESET DASAR */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background: #eaf2f8;
-            padding: 20px;
+        }
+
+        body {
+            background: #eef2f7;
+            color: #222;
+            padding: 25px 15px;
         }
 
         .container {
-            max-width: 450px;
+            max-width: 950px;
             margin: auto;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #172554, #2563eb);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #dbeafe;
+        }
+
+        /* KARTU */
+        .card {
             background: white;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 3px 10px #aaa;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
         }
 
-        h2 {
-            text-align: center;
-            color: #24527a;
+        .card h2 {
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        /* INPUT */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin: 7px 0;
-            box-sizing: border-box;
-            border: 1px solid #aaa;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+            outline: none;
         }
 
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        /* TOMBOL */
         button {
-            width: 100%;
-            padding: 11px;
-            margin-top: 10px;
-            background: #24527a;
-            color: white;
+            padding: 12px 18px;
             border: none;
-            border-radius: 5px;
+            border-radius: 7px;
             cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
         }
 
         button:hover {
-            background: #183b59;
+            opacity: 0.85;
+            transform: translateY(-1px);
         }
 
-        .hasil {
-            margin-top: 20px;
-            padding: 15px;
-            background: #eaf7ea;
-            border-radius: 8px;
+        .btn-add {
+            background: #2563eb;
+            color: white;
+            width: 100%;
+            margin-top: 5px;
         }
 
-        .total {
-            font-size: 20px;
+        .btn-delete {
+            background: #dc2626;
+            color: white;
+            padding: 8px 12px;
+        }
+
+        .btn-reset {
+            background: #64748b;
+            color: white;
+        }
+
+        .btn-print {
+            background: #059669;
+            color: white;
+        }
+
+        /* TABEL */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 13px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* TOTAL */
+        .total-box {
+            background: #eff6ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            gap: 10px;
+        }
+
+        .grand-total {
+            border-top: 2px solid #93c5fd;
+            padding-top: 15px;
+            font-size: 21px;
             font-weight: bold;
-            color: green;
+            color: #1d4ed8;
+        }
+
+        .discount-input {
+            margin-top: 15px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* NOTIFIKASI */
+        #pesan {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #dc2626;
+        }
+
+        .empty {
+            padding: 25px;
+            color: #64748b;
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        /* TAMPILAN HP */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 17px;
+            }
+
+            .button-group button {
+                flex: 1;
+            }
+        }
+
+        /* PENGATURAN CETAK */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .header {
+                background: white;
+                color: black;
+            }
+
+            .card {
+                box-shadow: none;
+            }
+
+            .input-card,
+            .button-group,
+            .btn-delete,
+            .discount-input,
+            footer {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -71,82 +248,460 @@
 
 <div class="container">
 
-    <h2>PROGRAM TOTAL BELANJA</h2>
-
-    <label>Nama Barang:</label>
-    <input type="text" id="nama" placeholder="Masukkan nama barang">
-
-    <label>Harga Barang (Rp):</label>
-    <input type="number" id="harga" placeholder="Masukkan harga">
-
-    <label>Jumlah Barang:</label>
-    <input type="number" id="jumlah" placeholder="Masukkan jumlah">
-
-    <button onclick="tambahBarang()">Tambah Barang</button>
-
-    <div class="hasil">
-        <h3>Daftar Belanja:</h3>
-        <div id="daftar"></div>
-
-        <hr>
-
-        <p class="total">
-            Total Belanja: <span id="total">Rp0</span>
-        </p>
+    <!-- HEADER WEBSITE -->
+    <div class="header">
+        <h1>PROGRAM KASIR</h1>
+        <p>Aplikasi Perhitungan Total Belanja Barang</p>
+        <p>Berbasis HTML, CSS, dan JavaScript</p>
     </div>
 
-    <button onclick="resetBelanja()">Hapus Semua</button>
+    <!-- FORM INPUT BARANG -->
+    <div class="card input-card">
+
+        <h2>Input Data Barang</h2>
+
+        <div class="form-group">
+            <label>Nama Barang</label>
+            <input
+                type="text"
+                id="nama"
+                placeholder="Masukkan nama barang">
+        </div>
+
+        <div class="form-group">
+            <label>Harga Barang (Rp)</label>
+            <input
+                type="number"
+                id="harga"
+                placeholder="Masukkan harga barang"
+                min="1">
+        </div>
+
+        <div class="form-group">
+            <label>Jumlah Barang</label>
+            <input
+                type="number"
+                id="jumlah"
+                placeholder="Masukkan jumlah barang"
+                min="1">
+        </div>
+
+        <button class="btn-add" onclick="tambahBarang()">
+            + Tambahkan Barang
+        </button>
+
+        <p id="pesan"></p>
+
+    </div>
+
+    <!-- DAFTAR BARANG -->
+    <div class="card">
+
+        <h2>Daftar Belanja</h2>
+
+        <div class="table-wrapper">
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
+                        <th>Subtotal</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody id="daftarBarang">
+
+                    <tr>
+                        <td colspan="6" class="empty">
+                            Belum ada barang yang ditambahkan.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+    <!-- PERHITUNGAN TOTAL -->
+    <div class="card">
+
+        <h2>Rincian Pembayaran</h2>
+
+        <div class="total-box">
+
+            <div class="total-row">
+                <span>Total Barang:</span>
+                <strong id="totalJumlah">0</strong>
+            </div>
+
+            <div class="total-row">
+                <span>Total Belanja:</span>
+                <strong id="totalBelanja">Rp 0</strong>
+            </div>
+
+            <div class="discount-input">
+
+                <label>Diskon (%)</label>
+
+                <input
+                    type="number"
+                    id="diskon"
+                    value="0"
+                    min="0"
+                    max="100"
+                    oninput="hitungTotal()">
+
+            </div>
+
+            <div class="total-row">
+                <span>Potongan Diskon:</span>
+                <strong id="potongan">Rp 0</strong>
+            </div>
+
+            <div class="total-row grand-total">
+                <span>Total Akhir:</span>
+                <strong id="totalAkhir">Rp 0</strong>
+            </div>
+
+        </div>
+
+        <div class="button-group">
+
+            <button class="btn-print" onclick="cetakStruk()">
+                Cetak Struk
+            </button>
+
+            <button class="btn-reset" onclick="resetKasir()">
+                Reset Transaksi
+            </button>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Program Kasir Sederhana</p>
+        <p>Dibuat untuk Pembelajaran Informatika</p>
+    </footer>
 
 </div>
 
 <script>
+
+    // ==================================
+    // 1. DEKLARASI VARIABEL
+    // ==================================
+
+    let keranjang = [];
+
     let totalBelanja = 0;
+
+
+    // ==================================
+    // 2. FORMAT RUPIAH
+    // ==================================
+
+    function formatRupiah(angka) {
+
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0
+        }).format(angka);
+
+    }
+
+
+    // ==================================
+    // 3. MENAMBAHKAN BARANG
+    // ==================================
 
     function tambahBarang() {
 
-        // Input data barang
-        let nama = document.getElementById("nama").value;
-        let harga = Number(document.getElementById("harga").value);
-        let jumlah = Number(document.getElementById("jumlah").value);
+        const nama = document.getElementById("nama")
+            .value.trim();
 
-        // Validasi input
-        if (nama === "" || harga <= 0 || jumlah <= 0) {
-            alert("Masukkan data barang dengan benar!");
+        const harga = Number(
+            document.getElementById("harga").value
+        );
+
+        const jumlah = Number(
+            document.getElementById("jumlah").value
+        );
+
+        const pesan = document.getElementById("pesan");
+
+        // VALIDASI INPUT
+
+        if (nama === "") {
+
+            pesan.textContent =
+                "Nama barang tidak boleh kosong!";
+
             return;
         }
 
-        // Menghitung subtotal
-        let subtotal = harga * jumlah;
+        if (!Number.isFinite(harga) || harga <= 0) {
 
-        // Menambahkan subtotal ke total belanja
-        totalBelanja += subtotal;
+            pesan.textContent =
+                "Harga harus berupa angka lebih dari 0!";
 
-        // Menampilkan daftar barang
-        let daftar = document.getElementById("daftar");
+            return;
+        }
 
-        daftar.innerHTML += `
-            <p>
-                ${nama} (${jumlah} x ${harga.toLocaleString("id-ID")})
-                = Rp${subtotal.toLocaleString("id-ID")}
-            </p>
-        `;
+        if (!Number.isSafeInteger(jumlah) || jumlah <= 0) {
 
-        // Menampilkan total belanja
-        document.getElementById("total").innerText =
-            "Rp" + totalBelanja.toLocaleString("id-ID");
+            pesan.textContent =
+                "Jumlah harus berupa bilangan bulat lebih dari 0!";
 
-        // Mengosongkan input
+            return;
+        }
+
+        const subtotal = harga * jumlah;
+
+        // MENYIMPAN DATA BARANG
+
+        const barang = {
+
+            nama: nama,
+            harga: harga,
+            jumlah: jumlah,
+            subtotal: subtotal
+
+        };
+
+        keranjang.push(barang);
+
+        pesan.textContent = "";
+
+        // MENGOSONGKAN INPUT
+
         document.getElementById("nama").value = "";
         document.getElementById("harga").value = "";
         document.getElementById("jumlah").value = "";
+
+        // MEMPERBARUI TABEL
+
+        tampilkanBarang();
+
+        hitungTotal();
+
     }
 
-    // Menghapus semua data belanja
-    function resetBelanja() {
-        totalBelanja = 0;
-        document.getElementById("daftar").innerHTML = "";
-        document.getElementById("total").innerText = "Rp0";
+
+    // ==================================
+    // 4. MENAMPILKAN DAFTAR BARANG
+    // ==================================
+
+    function tampilkanBarang() {
+
+        const tabel = document.getElementById("daftarBarang");
+
+        tabel.innerHTML = "";
+
+        if (keranjang.length === 0) {
+
+            tabel.innerHTML = `
+                <tr>
+                    <td colspan="6" class="empty">
+                        Belum ada barang yang ditambahkan.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        keranjang.forEach(function(barang, index) {
+
+            const baris = document.createElement("tr");
+
+            const data = [
+                index + 1,
+                barang.nama,
+                formatRupiah(barang.harga),
+                barang.jumlah,
+                formatRupiah(barang.subtotal)
+            ];
+
+            data.forEach(function(nilai) {
+
+                const td = document.createElement("td");
+
+                td.textContent = nilai;
+
+                baris.appendChild(td);
+
+            });
+
+            const kolomAksi = document.createElement("td");
+
+            const tombol = document.createElement("button");
+
+            tombol.textContent = "Hapus";
+
+            tombol.className = "btn-delete";
+
+            tombol.onclick = function() {
+
+                hapusBarang(index);
+
+            };
+
+            kolomAksi.appendChild(tombol);
+
+            baris.appendChild(kolomAksi);
+
+            tabel.appendChild(baris);
+
+        });
+
     }
+
+
+    // ==================================
+    // 5. MENGHAPUS BARANG
+    // ==================================
+
+    function hapusBarang(index) {
+
+        keranjang.splice(index, 1);
+
+        tampilkanBarang();
+
+        hitungTotal();
+
+    }
+
+
+    // ==================================
+    // 6. MENGHITUNG TOTAL BELANJA
+    // ==================================
+
+    function hitungTotal() {
+
+        totalBelanja = 0;
+
+        let jumlahSemua = 0;
+
+        // MENJUMLAHKAN SEMUA SUBTOTAL
+
+        keranjang.forEach(function(barang) {
+
+            totalBelanja += barang.subtotal;
+
+            jumlahSemua += barang.jumlah;
+
+        });
+
+        // MENGAMBIL NILAI DISKON
+
+        const inputDiskon = document.getElementById("diskon");
+
+        let diskon = Number(inputDiskon.value);
+
+        // VALIDASI DISKON
+
+        if (!Number.isFinite(diskon)) {
+            diskon = 0;
+        }
+
+        diskon = Math.max(0, Math.min(100, diskon));
+
+        inputDiskon.value = diskon;
+
+        // MENGHITUNG POTONGAN
+
+        const potongan = totalBelanja * diskon / 100;
+
+        // MENGHITUNG TOTAL AKHIR
+
+        const totalAkhir = totalBelanja - potongan;
+
+        // MENAMPILKAN HASIL
+
+        document.getElementById("totalJumlah")
+            .textContent = jumlahSemua;
+
+        document.getElementById("totalBelanja")
+            .textContent = formatRupiah(totalBelanja);
+
+        document.getElementById("potongan")
+            .textContent = formatRupiah(potongan);
+
+        document.getElementById("totalAkhir")
+            .textContent = formatRupiah(totalAkhir);
+
+    }
+
+
+    // ==================================
+    // 7. RESET TRANSAKSI
+    // ==================================
+
+    function resetKasir() {
+
+        if (keranjang.length === 0) {
+            alert("Belum ada transaksi yang perlu direset.");
+            return;
+        }
+
+        const konfirmasi = confirm(
+            "Apakah kamu yakin ingin menghapus semua data transaksi?"
+        );
+
+        if (konfirmasi) {
+
+            keranjang = [];
+
+            totalBelanja = 0;
+
+            document.getElementById("diskon").value = 0;
+
+            document.getElementById("pesan").textContent = "";
+
+            tampilkanBarang();
+
+            hitungTotal();
+
+        }
+
+    }
+
+
+    // ==================================
+    // 8. CETAK STRUK
+    // ==================================
+
+    function cetakStruk() {
+
+        if (keranjang.length === 0) {
+
+            alert("Tambahkan barang terlebih dahulu!");
+
+            return;
+
+        }
+
+        window.print();
+
+    }
+
+
+    // ==================================
+    // 9. INISIALISASI WEBSITE
+    // ==================================
+
+    tampilkanBarang();
+
+    hitungTotal();
+
 </script>
 
 </body>
